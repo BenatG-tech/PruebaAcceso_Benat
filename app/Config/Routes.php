@@ -37,6 +37,9 @@ $routes->get('/admin', 'Admin::index');
 $routes->get('/admin/usuarios', 'Admin::usuarios');
 $routes->get('/admin/noticias', 'Admin::noticias');
 
+$routes->get('/tiempo', 'Tiempo::index');
+$routes->get('/noticias', 'Noticias::index');
+
 /*
  * --------------------------------------------------------------------
  * Additional Routing

@@ -2,12 +2,16 @@
 
 <?= $this->section('content') ?>
 
+<?php
+	$url_base ="/PruebaAcceso_Benat/public";
+?>
+
 <section>
-	<button href="./tiempo" class="btn-lg btn-primary">
-		<h1>El tiempo</h1>
+	<button class="btn-lg btn-primary">
+		<a href="<?= base_url($url_base.'/tiempo') ?>" style="text-decoration: none" class="text-white"><i class="fas fa-cloud-sun"></i> El tiempo</a>
 	</button>
-	<button href="./noticias" class="btn-lg btn-secondary">
-		<h1>Las noticias</h1>
+	<button class="btn-lg btn-secondary">
+		<a href="<?= base_url($url_base.'/noticias') ?>" style="text-decoration: none" class="text-white"><i class="fas fa-newspaper"></i> Las noticias</a>
 	</button>
 </section>
 <?= $this->endSection() ?>
