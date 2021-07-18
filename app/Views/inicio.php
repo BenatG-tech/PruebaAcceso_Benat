@@ -3,18 +3,11 @@
 <?= $this->section('content') ?>
 
 <section>
-	<!--?= $this->renderSection('content') ?-->
-	<button href="./tiempo" class="">
-
+	<button href="./tiempo" class="btn-lg btn-primary">
 		<h1>El tiempo</h1>
-
 	</button>
-
-	<button href="./noticias" class="">
-
+	<button href="./noticias" class="btn-lg btn-secondary">
 		<h1>Las noticias</h1>
-
 	</button>
-
 </section>
 <?= $this->endSection() ?>
