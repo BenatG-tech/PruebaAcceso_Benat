@@ -202,6 +202,10 @@
 </head>
 <body>
 
+<?php
+	$url_base ="/PruebaAcceso_Benat/public";
+?>
+
 <!-- HEADER-->
 <header>
 	<nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-end">
@@ -209,16 +213,16 @@
 			<div class="collapse navbar-collapse" id="navbarNav">
 				<ul class="navbar-nav">
 					<li class="nav-item">
-						<a class="nav-link active" aria-current="page" href="./">Inicio</a>
+						<a class="nav-link active" aria-current="page" href="<?= base_url($url_base.'/') ?>">Inicio</a>
 					</li>
 					<li class="nav-item abrirModalLogIn">
-						<a class="nav-link" href="./admin">Acceso</a>
+						<a class="nav-link" href="<?= base_url($url_base.'/admin') ?>">Acceso</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="./noticias">Noticias</a>
+						<a class="nav-link" href="<?= base_url($url_base.'/noticias') ?>">Noticias</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="./tiempo">Tiempo</a>
+						<a class="nav-link" href="<?= base_url($url_base.'/tiempo') ?>">Tiempo</a>
 					</li>
 				</ul>
 			</div>

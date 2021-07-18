@@ -35,7 +35,7 @@ class Database extends Config
 		'hostname' => 'localhost',
 		'username' => '',
 		'password' => '',
-		'database' => '',
+		'database' => 'app_web_prueba_cistec',
 		'DBDriver' => 'MySQLi',
 		'DBPrefix' => '',
 		'pConnect' => false,
