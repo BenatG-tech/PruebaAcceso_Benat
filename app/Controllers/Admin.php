@@ -20,15 +20,20 @@ class Admin extends BaseController
 
 		if (count($_POST) != 0) {
 			$usuario = new UsuarioModel();
-			$datos = [
-				'Usuario' => trim($this->request->getPost('usuarioUsuario')),
-				'Contrasena' => trim($this->request->getPost('contrasenaUsuario')),
-				'Email' =>trim($this->request->getPost('emailUsuario'))
-			];
-			if ($this->request->getPost('idUsuario') != Null) {
-				$usuario->update($this->request->getPost('idUsuario'), $datos);
+			if (sizeof($_POST) == 1) {
+				$keys = array_keys($_POST);
+				$usuario->delete($_POST[$keys[0]]);
 			} else {
-				$usuario->insert($datos);
+				$datos = [
+					'Usuario' => trim($this->request->getPost('usuarioUsuario')),
+					'Contrasena' => trim($this->request->getPost('contrasenaUsuario')),
+					'Email' =>trim($this->request->getPost('emailUsuario'))
+				];
+				if ($this->request->getPost('idUsuario') != Null) {
+					$usuario->update($this->request->getPost('idUsuario'), $datos);
+				} else {
+					$usuario->insert($datos);
+				}
 			}
 		}
 
@@ -43,10 +48,14 @@ class Admin extends BaseController
 		$data['noticias'] = $noticias->findAll();
 		$data['categorias'] = $categorias->findAll();
 		$data['noticias_categorias'] = $noticias_categorias->findAll();
+		
 		if (count($_POST) != 0) {
 			$noticia = new NoticiaModel();
 			date_default_timezone_set("Europe/Madrid");
-			if ($this->request->getPost('idNoticia') != Null) {
+			if (sizeof($_POST) == 1) {
+				$keys = array_keys($_POST);
+				$noticia->delete($_POST[$keys[0]]);
+			} else if ($this->request->getPost('idNoticia') != Null) {
 				$datos = [
 					'Titular' => trim($this->request->getPost('titularNoticia')),
 					'Cuerpo' => trim($this->request->getPost('cuerpoNoticia')),
@@ -82,13 +91,18 @@ class Admin extends BaseController
 		$data['categorias'] = $categorias->findAll();
 		if (count($_POST) != 0) {
 			$categoria = new CategoriaModel();
-			$datos = [
-				'Nombre' => trim($this->request->getPost('nombreCategoria')),
-			];
-			if ($this->request->getPost('idCategoria') != Null) {
-				$categoria->update($this->request->getPost('idCategoria'), $datos);
+			if (strpos(array_keys($_POST)[0], 'id_') == 0) {
+				$keys = array_keys($_POST);
+				$categoria->delete($_POST[$keys[0]]);
 			} else {
-				$categoria->insert($datos);
+				$datos = [
+					'Nombre' => trim($this->request->getPost('nombreCategoria')),
+				];
+				if ($this->request->getPost('idCategoria') != Null) {
+					$categoria->update($this->request->getPost('idCategoria'), $datos);
+				} else {
+					$categoria->insert($datos);
+				}
 			}
 		}
 

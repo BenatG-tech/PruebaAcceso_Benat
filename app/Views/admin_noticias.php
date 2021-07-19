@@ -41,11 +41,13 @@
             <div>
                 <h1><?php echo($noticias[$i]['Titular']); ?></h1>
                 <input type="hidden" id="titular_<?php echo($id);?>" value="<?php echo($noticias[$i]['Titular']); ?>">
-                <input type="hidden" id="id_<?php echo($id);?>" value="<?php echo($id); ?>">
-                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                    <button type="button" id="editar_<?php echo($id);?>" class="btn btn-primary btn-sm abrirModalNoticia" data-toggle="modal" data-target="#modalNoticia"><i class="fas fa-edit"></i></button>
-                    <button type="button" id="borrar_<?php echo($id);?>" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>
-                </div>
+                <form action="<?php echo(base_url($url_base.'/admin/noticias')); ?>" method="POST">
+                    <input type="hidden" name="id_<?php echo($id);?>" id="id_<?php echo($id);?>" value="<?php echo($id); ?>">
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <button type="button" id="editar_<?php echo($id);?>" class="btn btn-primary btn-sm abrirModalNoticia" data-toggle="modal" data-target="#modalNoticia"><i class="fas fa-edit"></i></button>
+                        <button type="submit" id="borrar_<?php echo($id);?>" class="btn btn-danger btn-sm submit"><i class="fas fa-trash-alt"></i></button>
+                    </div>
+                </form>
                 <p><?php echo($noticias[$i]['Cuerpo']); ?></p>
                 <input type="hidden" id="cuerpo_<?php echo($id);?>" value="<?php echo($noticias[$i]['Cuerpo']); ?>">
                 <p>Fecha de publicación: <?php echo($noticias[$i]['Fecha']); ?></p>
