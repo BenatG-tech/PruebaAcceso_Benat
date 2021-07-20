@@ -40,6 +40,9 @@ $routes->get('/admin/categorias', 'Admin::categorias');
 
 $routes->get('/tiempo', 'Tiempo::index');
 $routes->get('/noticias', 'Noticias::index');
+$routes->post('/noticias/categoria/(:any)', 'Noticias::categoria');
+
+$routes->post('/noticias/(:any)', 'Noticias::noticia');
 
 /*
  * --------------------------------------------------------------------
