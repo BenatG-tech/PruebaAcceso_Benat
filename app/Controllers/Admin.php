@@ -62,6 +62,12 @@ class Admin extends BaseController
 					'Slug' => strtr(strtolower(trim($this->request->getPost('titularNoticia'))), " ", "-")
 				];
 				$noticia->update($this->request->getPost('idNoticia'), $datos);
+
+				$noticia_categoria = new NoticiaCategoriaModel();
+				$datos = [
+					'noticias_categorias_id' => trim($this->request->getPost('categoriaNoticia'))
+				];
+				$noticia_categoria->update($this->request->getPost('idNoticia'), $datos);
 			} else {
 				$datos = [
 					'Titular' => trim($this->request->getPost('titularNoticia')),
@@ -71,14 +77,19 @@ class Admin extends BaseController
 				];
 				$noticia->insert($datos);
 
-				//Registrar cambios de categoría 
-				/**$noticia_categoria = new NoticiaCategoriaModel();
-				$datos = [
-					'noticia_id' => trim($this->request->getPost('idNoticia')),
-					'categoria_id' => trim($this->request->getPost('categoriaNoticia'))
-				];
-				$noticia_categoria->insert($datos);*/
-
+				$noticia_categoria = new NoticiaCategoriaModel();
+				$ntcs = $noticias->findAll();
+				for ($i = 0; $i < sizeof($ntcs); $i++) {
+					if (strcmp((String)$ntcs[$i]['Fecha'], date("Y-m-d")) == 0) {
+						if (strcmp( trim($this->request->getPost('titularNoticia')) , $ntcs[$i]['Titular'] ) == 0) {
+							$datos = [
+								'noticias_id' => $ntcs[$i]['id'],
+								'noticias_categorias_id' => trim($this->request->getPost('categoriaNoticia'))
+							];
+							$noticia_categoria->insert($datos);
+						}
+					}
+				}
 			}
 		}
 

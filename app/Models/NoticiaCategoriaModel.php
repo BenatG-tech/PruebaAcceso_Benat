@@ -6,7 +6,7 @@ class NoticiaCategoriaModel extends Model
 {
     protected $table = 'tbl_noticias_tiene_categorias';
 
-    //protected $primaryKey = 'id';
+    protected $primaryKey = 'noticias_id';
     
     protected $allowedFields = ['noticias_id', 'noticias_categorias_id'];
 
@@ -16,20 +16,8 @@ class NoticiaCategoriaModel extends Model
     protected $updatedField = 'updated_at'; 
     protected $deletedField = 'deleted_at'; 
     protected $validationRules = [
-        'noticias_id' => 'required',
         'noticias_categorias_id' => 'required'
     ]; 
     protected $validationMessages = []; 
     protected $skipValidation = true; 
-
-    public function getEntityNoticia($noticias_id) { 
-        return $this->where("noticias_id=". $noticias_id)->find(); 
-    } 
-    public function getEntityCategoria($noticias_categorias_id) { 
-        return $this->where("noticias_categorias_id=". $noticias_categorias_id)->find(); 
-    }
-    
-    public function getEntityNoticiasCategoria($noticias_id, $noticias_categorias_id) { 
-        return $this->where("noticias_id=". $noticias_id . " and noticias_categorias_id=". $noticias_categorias_id)->find(); 
-    }
 }
