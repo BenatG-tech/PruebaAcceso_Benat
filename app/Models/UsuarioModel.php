@@ -16,19 +16,14 @@ class UsuarioModel extends Model
     protected $updatedField = 'updated_at'; 
     protected $deletedField = 'deleted_at'; 
     protected $validationRules = [
-        'id' => 'required|unique|id',
-        'Usuario' => 'required|unique',
+        'Usuario' => 'required',
         'Contrasena' => 'required',
-        'Email' => 'required|unique'
+        'Email' => 'required'
     ]; 
     protected $validationMessages = []; 
     protected $skipValidation = false; 
 
     public function getEntity($identity) { 
-        return $this->where("identity=". $identity)->find(); 
-    } 
-
-    /**public function getEntity($identity) {  
-     *  return $this->orderBy("identity",'DESC')->limit(0, $limit)->find(); 
-    }*/
+        return $this->where("id=". $identity)->find(); 
+    }
 }

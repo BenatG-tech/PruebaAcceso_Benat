@@ -16,20 +16,16 @@ class NoticiaModel extends Model
     protected $updatedField = 'updated_at'; 
     protected $deletedField = 'deleted_at'; 
     protected $validationRules = [
-        'id' => 'required|unique|id',
         'Titular' => 'required',
         'Fecha' => 'required',
-        'Slug' => 'required|unique',
-        'email' => 'required'
+        'Slug' => 'required'
     ]; 
-    protected $validationMessages = []; 
+    protected $validationMessages = [
+        'Titular' => 'Es obligatorio que tenga un Titular.'
+    ];
     protected $skipValidation = false; 
 
     public function getEntity($identity) { 
-        return $this->where("identity=". $identity)->find(); 
+        return $this->where("id=". $identity)->find(); 
     } 
-
-    /**public function getEntity($identity) {  
-     *  return $this->orderBy("identity",'DESC')->limit(0, $limit)->find(); 
-    }*/
 }

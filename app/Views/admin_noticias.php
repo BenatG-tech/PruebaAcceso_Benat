@@ -5,72 +5,171 @@
 
 <script type="text/javascript">
 	$(document).ready(function(){
-		$('.abrirModalNoticia').on('click',function(){
-			$('#modalNoticia').modal('show');
+		$('.verModalNoticia').on('click',function() {
+            $id = $(this).attr('id').substring(4, $(this).attr('id').length);
+            $('h1#titularNoticia').text(document.getElementById('titular_'+$id).value);
+            $('p#idNoticia').text('ID: ' + $id);
+            $('p#fechaNoticia').text('Fecha de publicación: ' + document.getElementById('fecha_'+$id).value);
+            $('p#cuerpoNoticia').text(document.getElementById('cuerpo_'+$id).value);
+            $('p#slugNoticia').text('Slug: ' + document.getElementById('slug_'+$id).value);
+            $('p#categoriaNoticia').text((document.getElementById('categorias_'+$id).value).split('_')[1]);
+			$('#modalNoticiaVer').modal('show');
+		});
+        $('.editarModalNoticia').on('click',function() {
+            $id = $(this).attr('id').substring(7, $(this).attr('id').length);
+            $('input[type=text]#titularNoticia').val(document.getElementById('titular_'+$id).value);
+            $('input[type=text]#idNoticia').val($id);
+            $('input[type=text]#idNoticiaDisabled').val($id);
+            $('input[type=text]#fechaNoticia').val(document.getElementById('fecha_'+$id).value);
+            $('input[type=text]#fechaNoticiaDisabled').val(document.getElementById('fecha_'+$id).value);
+            $('textarea#cuerpoNoticia').val(document.getElementById('cuerpo_'+$id).value);
+            $('input[type=text]#slugNoticia').val(document.getElementById('slug_'+$id).value);
+            $('input[type=text]#slugNoticiaDisabled').val(document.getElementById('slug_'+$id).value);
+            $('#categoriaNoticia').val((document.getElementById('categorias_'+$id).value).split('_')[0]).change();
+			$('#modalNoticiaEditar').modal('show');
 		});
 		$('.cerrarModal').on('click', function() {
-			$("#modalNoticia").modal("hide"); 
+			$("#modalNoticiaEditar").modal("hide"); 
+            $("#modalNoticiaVer").modal("hide"); 
+		});
+        $('.crearNoticia').on('click', function() {
+            $('input[type=text]#titularNoticia').val('');
+            $('input[type=text]#idNoticia').val('');
+            $('input[type=text]#fechaNoticia').val('');
+            $('textarea#cuerpoNoticia').val('');
+            $('input[type=text]#slugNoticia').val('');
+			$("#modalNoticiaEditar").modal("show"); 
 		});
 	});
 </script>
 
+<?php
+	$url_base ="/PruebaAcceso_Benat/public";
+?>
+
 <section>
-	<div>
-		<h1>Titulo de ejemplo</h1>
-		<p>ID noticia</p>
-		<div class="d-grid gap-2 d-md-flex justify-content-md-end">
-			<button type="button" class="btn btn-primary btn-sm abrirModalNoticia" data-toggle="modal" data-target="#modalNoticia"><i class="fas fa-edit"></i></button>
-			<button type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>
-		</div>
-		<p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis at blandit ligula, et vulputate quam. 
-			Donec nulla augue, rutrum sit amet nulla eget, egestas imperdiet urna. Vestibulum vitae elit eu risus consequat viverra. 
-			Donec pulvinar lectus ut tellus viverra convallis. Etiam tortor ante, eleifend eget nisl eu, aliquam pulvinar mi. 
-			Vivamus aliquet volutpat lobortis. Sed vestibulum massa id metus ultrices egestas. Suspendisse tempor laoreet nisi, et consequat dolor efficitur elementum. 
-			Sed pellentesque massa ac eros vulputate tincidunt. Morbi laoreet faucibus lacus.<br>
-			Nunc id tincidunt nibh, in vestibulum est. In leo lacus, tristique vitae interdum vitae, ultrices ultrices orci. 
-			Vivamus enim arcu, dapibus sit amet velit sed, suscipit vulputate magna. Etiam posuere venenatis arcu ac commodo. 
-			Quisque ultrices lacus lectus, nec viverra quam pretium eu. Sed fringilla vel ex sed pellentesque. 
-			Integer vitae luctus mauris, ut tincidunt nisi. Sed cursus tortor felis.</p>
-	</div>
+    <button type="button" class="btn btn-success btn-sm float-left crearNoticia"><i class="fas fa-plus-circle"></i> Nueva noticia</button>
+    <?php if (is_array($noticias) && sizeof($noticias) > 0) {
+        for ($i = 0; $i < sizeof($noticias); $i++) { 
+            $id = $noticias[$i]['id'];?>
+            <div>
+                <div style="clear:both;">
+                    <h1 style="float: left; width:80%; margin-bottom:15px;"><?php echo($noticias[$i]['Titular']); ?></h1>
+                    <input type="hidden" id="titular_<?php echo($id);?>" value="<?php echo($noticias[$i]['Titular']); ?>">
+                    <form action="<?php echo(base_url($url_base.'/admin/noticias')); ?>" method="POST">
+                        <input type="hidden" name="id_<?php echo($id);?>" id="id_<?php echo($id);?>" value="<?php echo($id); ?>">
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end" style="float: right;width:20%;margin:17px 0px;">
+                            <button type="button" id="ver_<?php echo($id);?>" class="btn btn-primary btn-sm verModalNoticia" data-toggle="modal" data-target="#modalNoticiaVer"><i class="fas fa-eye"></i></button>
+                            <button type="button" id="editar_<?php echo($id);?>" class="btn btn-primary btn-sm editarModalNoticia" data-toggle="modal" data-target="#modalNoticiaEditar"><i class="fas fa-edit"></i></button>
+                            <button type="submit" id="borrar_<?php echo($id);?>" class="btn btn-danger btn-sm submit"><i class="fas fa-trash-alt"></i></button>
+                        </div>
+                    </form>
+                </div>
+                <div style="width:90%">
+                    <p>
+                        <?php if (strlen($noticias[$i]['Cuerpo']) > 200) {
+                            echo(substr($noticias[$i]['Cuerpo'], 0, 200) . ' ...');
+                        } else {
+                            echo($noticias[$i]['Cuerpo']);
+                        } ?>
+                    </p>
+                </div>
+                <input type="hidden" id="cuerpo_<?php echo($id);?>" value="<?php echo($noticias[$i]['Cuerpo']); ?>">
+                <p>Fecha de publicación: <?php echo($noticias[$i]['Fecha']); ?></p>
+                <input type="hidden" id="fecha_<?php echo($id);?>" value="<?php echo($noticias[$i]['Fecha']); ?>">
+                <input type="hidden" id="slug_<?php echo($id);?>" value="<?php echo($noticias[$i]['Slug']); ?>">
+                <?php if (sizeof($categorias) > 0 && sizeof($noticias_categorias) > 0) {
+                    for ($j = 0; $j < sizeof($noticias_categorias); $j++) { 
+                        if ((int) $noticias_categorias[$j]['noticias_id'] == (int) $id) {
+                            for ($k = 0; $k < sizeof($categorias); $k++) {
+                                if ((int) $categorias[$k]['id'] == (int) $noticias_categorias[$j]['noticias_categorias_id']) { ?>
+                                    <p>Categoría: <?php echo($categorias[$k]['Nombre']); ?></p>
+                                    <input type="hidden" id="categorias_<?php echo($id);?>" value="<?php echo($categorias[$k]['id'] . '_' . $categorias[$i]['Nombre']); ?>">
+                                <?php }
+                            }
+                        }
+                    }
+                } ?>
+                </br>
+            </div>
+        <?php }
+    } else {
+        echo("<div class='alert alert-danger' role='alert'>
+                No hay ninguna noticia publicada. Empiece a crear nuevas noticias para poder verlas.
+            </div>");
+    }?>
 	
 </section>
 
 <!-- Modal -->
-<div class="modal fade" id="modalNoticia" role="dialog">
-    <div class="modal-dialog">
+<div class="modal fade" id="modalNoticiaEditar" role="dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <!-- Modal Header -->
             <div class="modal-header">
                 <h4 class="modal-title">Editar noticia</h4>
             </div>
-            
-            <!-- Modal Body -->
             <div class="modal-body">
-                <form role="form">
+                <form action="<?php echo(base_url($url_base.'/admin/noticias')); ?>" method="POST">
                     <div class="form-group">
-                        <label for="tituloNoticia">Título: </label>
-                        <input type="text" class="form-control" id="tituloNoticia"/>
+                        <label>Titular: </label>
+                        <input type="text" class="form-control" name="titularNoticia" id="titularNoticia"/>
+                    </div>
+                    <div class="form-group">
+                        <label>Slug: <i class="fas fa-info-circle" data-container="body" data-toggle="popover" data-placement="top" title="Se actualiza una vez guardados los cambios." data-content="Información sobre Slug." data-original-title=""></i></label>
+                        <input type="text" class="form-control" id="slugNoticiaDisabled" disabled/>
+                        <input type="hidden" class="form-control" name="slugNoticia" id="slugNoticia"/>
                     </div>
 					<div class="form-group">
-                        <label for="idNoticia">ID: </label>
-                        <input type="text" class="form-control" id="idNoticia"/>
+                        <label>ID: </label>
+                        <input type="text" class="form-control" id="idNoticiaDisabled" disabled/>
+                        <input type="hidden" class="form-control" name="idNoticia" id="idNoticia"/>
                     </div>
                     <div class="form-group">
-                        <label for="categoriaNoticia">Categoria: </label>
-                        <input type="email" class="form-control" id="categoriaNoticia"/>
+                        <label>Fecha de publicación: </label>
+                        <input type="text" class="form-control"id="fechaNoticiaDisabled" disabled/>
+                        <input type="hidden" class="form-control" name="fechaNoticia" id="fechaNoticia"/>
                     </div>
                     <div class="form-group">
-                        <label for="textoNoticia">Texto: </label>
-                        <textarea class="form-control" id="textoNoticia"></textarea>
+                        <label>Categoria: </label>
+                        <select name="categoriaNoticia" id="categoriaNoticia" class="form-select form-select-lg mb-3">
+                            <?php for ($i = 0; $i < sizeof($categorias); $i++) {?>
+                                <option value="<?php echo($categorias[$i]['id']);?>"><?php echo($categorias[$i]['Nombre']); ?> </option>
+                            <?php } ?>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Cuerpo: </label>
+                        <textarea class="form-control" name="cuerpoNoticia" id="cuerpoNoticia" rows="8"></textarea>
+                    </div>
+                    <div>
+                        <button type="button" class="btn btn-default cerrarModal" data-dismiss="modal"><i class="fas fa-window-close"></i> Cerrar</button>
+                        <button type="submit" class="btn btn-primary guardarModal submit"><i class="far fa-save"></i> Guardar</button>
                     </div>
                 </form>
             </div>
-            
-            <!-- Modal Footer -->
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default cerrarModal" data-dismiss="modal"><i class="fas fa-window-close"></i> Cerrar</button>
-                <button type="button" class="btn btn-primary submitBtn" onclick="submitContactForm()"><i class="far fa-save"></i> Guardar cambios</button>
+            <div class="modal-footer"></div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalNoticiaVer" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Noticia</h4>
             </div>
+            <div class="modal-body">
+                <h1 id="titularNoticia" style="width:100%; margin-bottom:15px;"></h1>
+                <p id="idNoticia"></p>
+                <p id="cuerpoNoticia"></p>
+                <p id="fechaNoticia"></p>
+                <p id="slugNoticia"></p>
+                <p id="categoriaNoticia"> </p>
+                <div>
+                    <button type="button" class="btn btn-default cerrarModal" data-dismiss="modal"><i class="fas fa-window-close"></i> Cerrar</button>
+                </div>
+            </div>
+            <div class="modal-footer"></div>
         </div>
     </div>
 </div>

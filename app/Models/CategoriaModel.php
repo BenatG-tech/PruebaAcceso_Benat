@@ -16,8 +16,7 @@ class CategoriaModel extends Model
     protected $updatedField = 'updated_at'; 
     protected $deletedField = 'deleted_at'; 
     protected $validationRules = [
-        'id' => 'required|unique|id',
-        'Nombre' => 'required|unique'
+        'Nombre' => 'required'
     ]; 
     protected $validationMessages = []; 
     protected $skipValidation = false; 
@@ -25,8 +24,4 @@ class CategoriaModel extends Model
     public function getEntity($identity) { 
         return $this->where("identity=". $identity)->find(); 
     } 
-
-    /**public function getEntity($identity) {  
-     *  return $this->orderBy("identity",'DESC')->limit(0, $limit)->find(); 
-    }*/
 }
