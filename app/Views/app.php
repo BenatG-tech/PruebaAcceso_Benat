@@ -5,12 +5,9 @@
 	<title>Welcome to CodeIgniter 4!</title>
 	<meta name="description" content="The small framework with powerful features">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<!--link rel="shortcut icon" type="image/png" href="/favicon.ico"/-->
-	<!--script type="text/javascript" src="app.js"></script-->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-	<!--link rel="stylesheet" href="/PruebaAcceso_Benat/bootstrap/css/bootstrap.css"></script-->
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 
 
@@ -209,14 +206,14 @@
 			<div class="collapse navbar-collapse" id="navbarNav">
 				<ul class="navbar-nav">
 					<li class="nav-item">
-						<a class="nav-link" aria-current="page" href="./">Inicio</a>
+						<a class="nav-link" aria-current="page" href="<?= base_url('/') ?>">Inicio</a>
 					</li>
 					<li class="nav-item abrirModalLogIn">
 						<a class="nav-link 
 							<?php if(strlen(session('usuario')) == 0) { ?>
 								iniciarLoginModal" href="#"
 							<?php } else { ?>
-								" href="./admin"
+								" href="<?= base_url('/admin') ?>"
 							<?php } ?> >Acceso</a>
 					</li>
 					<li class="nav-item">

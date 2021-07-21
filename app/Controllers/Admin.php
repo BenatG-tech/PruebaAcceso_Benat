@@ -69,8 +69,8 @@ class Admin extends BaseController
 					$usuario->insert($datos);
 				}
 			}
+			return redirect()->to(base_url('/admin/usuarios'));
 		}
-
 		return view('admin_usuarios', $data);
 	}
 
@@ -129,6 +129,7 @@ class Admin extends BaseController
 					}
 				}
 			}
+			return redirect()->to(base_url('/admin/noticias'));
 		}
 
 		return view('admin_noticias', $data);
@@ -153,6 +154,7 @@ class Admin extends BaseController
 					$categoria->insert($datos);
 				}
 			}
+			return redirect()->to(base_url('/admin/categorias'));
 		}
 
 		return view('admin_categorias', $data);
