@@ -202,10 +202,6 @@
 </head>
 <body>
 
-<?php
-	$url_base ="/PruebaAcceso_Benat/public";
-?>
-
 <!-- HEADER-->
 <header>
 	<nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-end">
@@ -224,10 +220,10 @@
 							<?php } ?> >Acceso</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="<?= base_url($url_base.'/noticias') ?>">Noticias</a>
+						<a class="nav-link" href="<?= base_url('/noticias') ?>">Noticias</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="<?= base_url($url_base.'/tiempo') ?>">Tiempo</a>
+						<a class="nav-link" href="<?= base_url('/tiempo') ?>">Tiempo</a>
 					</li>
 				</ul>
 			</div>
