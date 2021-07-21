@@ -2,7 +2,6 @@
 
 <?= $this->section('content') ?>
 <?php
-	$url_base ="/PruebaAcceso_Benat/public";
 	$route_actual = substr(current_url(), 32);
 	$colores = ['btn-primary', 'btn-secondary', 'btn-success', 'btn-danger', 'btn-warning', 'btn-info', 'btn-dark'];
 ?>
@@ -17,7 +16,7 @@
 				$nombre_categoria = str_replace($no_permitidas, $permitidas ,$categorias[$i]['Nombre']);
 				$nombre_categoria = strtr(strtolower(trim($nombre_categoria)), " ", "-");
 				?>
-				<form action="<?php echo(base_url($url_base.'/noticias/categoria' . '/' . $nombre_categoria)); ?>" method="POST" style="float:left; margin-left:10px;">
+				<form action="<?php echo(base_url('/noticias/categoria' . '/' . $nombre_categoria)); ?>" method="POST" style="float:left; margin-left:10px;">
 					<button type="submit" class="btn <?php if ($i < count($colores)) {
 							echo($colores[$i]);
 						} else {

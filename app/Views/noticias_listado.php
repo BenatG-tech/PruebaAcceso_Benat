@@ -3,10 +3,6 @@
 
 <?= $this->section('content') ?>
 
-<?php
-	$url_base ="/PruebaAcceso_Benat/public";
-?>
-
 <section>
 	<?php if (is_array($noticias) && sizeof($noticias) > 0) {
 		$empezar = 0;
@@ -19,7 +15,7 @@
 			$id = $noticias[$i]['id']; ?>
 				<div>
 					<div style="clear:both;">
-						<form action="<?php echo(base_url($url_base.'/noticias' . '/' . $noticias[$i]['Slug'])); ?>" method="POST">
+						<form action="<?php echo(base_url('/noticias' . '/' . $noticias[$i]['Slug'])); ?>" method="POST">
 							<h1 style="float: left; width:80%; margin-bottom:15px;"><?php echo($noticias[$i]['Titular']); ?></h1>
 							<div class="d-grid gap-2 d-md-flex justify-content-md-end" style="float: right;width:20%;margin:17px 0px;">
 								<button type="submit" id="<?php echo($id);?>" class="btn btn-primary btn-sm submit"><i class="fas fa-eye"></i> Leer noticia</button>
@@ -46,7 +42,7 @@
 											$nombre_categoria = str_replace($no_permitidas, $permitidas ,$categorias[$k]['Nombre']);
 											$nombre_categoria = strtr(strtolower(trim($nombre_categoria)), " ", "-");
 											?>
-											<form action="<?php echo(base_url($url_base.'/noticias/categoria' . '/' . $nombre_categoria)); ?>" method="POST">
+											<form action="<?php echo(base_url('/noticias/categoria' . '/' . $nombre_categoria)); ?>" method="POST">
 												<p>Categoría: <button type="submit" id="<?php echo($categorias[$k]['Nombre']); ?>_<?php echo($categorias[$k]['id']); ?>" class="btn btn-light btn-sm submit"><?php echo($categorias[$k]['Nombre']); ?></button></p>
 											</form>
 										<?php }

@@ -4,7 +4,6 @@
 <?= $this->section('content') ?>
 
 <?php
-	$url_base ="/PruebaAcceso_Benat/public";
 	$route_actual = substr(current_url(), 41); //slug
 ?>
 
@@ -28,7 +27,7 @@
 										$nombre_categoria = str_replace($no_permitidas, $permitidas ,$categorias[$k]['Nombre']);
 										$nombre_categoria = strtr(strtolower(trim($nombre_categoria)), " ", "-");
 										?>
-										<form action="<?php echo(base_url($url_base.'/noticias/categoria' . '/' . $nombre_categoria)); ?>" method="POST">
+										<form action="<?php echo(base_url('/noticias/categoria' . '/' . $nombre_categoria)); ?>" method="POST">
 											<p>Categoría: <button type="submit" id="<?php echo($categorias[$k]['Nombre']); ?>_<?php echo($categorias[$k]['id']); ?>" class="btn btn-light btn-sm submit"><?php echo($categorias[$k]['Nombre']); ?></button></p>
 										</form>
 									<?php }
