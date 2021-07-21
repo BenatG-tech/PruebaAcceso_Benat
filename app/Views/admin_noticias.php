@@ -10,6 +10,7 @@
             $('h1#titularNoticia').text(document.getElementById('titular_'+$id).value);
             $('p#idNoticia').text('ID: ' + $id);
             $('p#fechaNoticia').text('Fecha de publicación: ' + document.getElementById('fecha_'+$id).value);
+            $('p#autorNoticia').text(document.getElementById('nombre_autor_'+$id).innerHTML);
             $('p#cuerpoNoticia').text(document.getElementById('cuerpo_'+$id).value);
             $('p#slugNoticia').text('Slug: ' + document.getElementById('slug_'+$id).value);
             $('p#categoriaNoticia').text('Categoría: ' + (document.getElementById('categorias_'+$id).value).split('_')[1]);
@@ -22,6 +23,8 @@
             $('input[type=text]#idNoticiaDisabled').val($id);
             $('input[type=text]#fechaNoticia').val(document.getElementById('fecha_'+$id).value);
             $('input[type=text]#fechaNoticiaDisabled').val(document.getElementById('fecha_'+$id).value);
+            $('input[type=text]#autorNoticia').val(document.getElementById('autor_'+$id).value);
+            $('input[type=text]#autorNoticiaDisabled').val(document.getElementById('nombre_autor_'+$id).innerHTML.substr(9));
             $('textarea#cuerpoNoticia').val(document.getElementById('cuerpo_'+$id).value);
             $('input[type=text]#slugNoticia').val(document.getElementById('slug_'+$id).value);
             $('input[type=text]#slugNoticiaDisabled').val(document.getElementById('slug_'+$id).value);
@@ -36,6 +39,8 @@
             $('input[type=text]#titularNoticia').val('');
             $('input[type=text]#idNoticia').val('');
             $('input[type=text]#fechaNoticia').val('');
+            $('input[type=text]#autorNoticia').val('<?php echo(session('usuario')); ?>');
+            $('input[type=text]#autorNoticiaDisabled').val('<?php for ($i = 0; $i < sizeof($usuarios); $i++) { if (strcmp(session('usuario'), $usuarios[$i]['id']) == 0) { echo($usuarios[$i]['Usuario']); } } ?>');
             $('textarea#cuerpoNoticia').val('');
             $('input[type=text]#slugNoticia').val('');
 			$("#modalNoticiaEditar").modal("show"); 
@@ -72,15 +77,28 @@
                 </div>
                 <input type="hidden" id="cuerpo_<?php echo($id);?>" value="<?php echo($noticias[$i]['Cuerpo']); ?>">
                 <p>Fecha de publicación: <?php echo($noticias[$i]['Fecha']); ?></p>
+                <?php if ($noticias[$i]['usuarios_id'] != NULL) {
+                    if (sizeof($usuarios) > 0 && sizeof($usuarios) > 0) {
+                        for ($j = 0; $j < sizeof($usuarios); $j++) { 
+                            if (strcmp($usuarios[$j]['id'], $noticias[$i]['usuarios_id']) == 0) { ?>
+                                <p id="nombre_autor_<?php echo($id);?>">Autor/a: <?php echo($usuarios[$j]['Usuario']); ?></p>
+                                <input type="hidden" id="autor_<?php echo($id);?>" value="<?php echo($usuarios[$j]['id']); ?>">
+                            <?php }
+                        }
+                    }
+                } else { ?>
+                    <p id="nombre_autor_<?php echo($id);?>">Autor/a: -- </p>
+                    <input type="hidden" id="autor_<?php echo($id);?>" value="--">
+                <?php } ?>
                 <input type="hidden" id="fecha_<?php echo($id);?>" value="<?php echo($noticias[$i]['Fecha']); ?>">
                 <input type="hidden" id="slug_<?php echo($id);?>" value="<?php echo($noticias[$i]['Slug']); ?>">
                 <?php if (sizeof($categorias) > 0 && sizeof($noticias_categorias) > 0) {
                     for ($j = 0; $j < sizeof($noticias_categorias); $j++) { 
-                        if ((int) $noticias_categorias[$j]['noticias_id'] == (int) $id) {
+                        if (strcmp($noticias_categorias[$j]['noticias_id'], $id) == 0) {
                             for ($k = 0; $k < sizeof($categorias); $k++) {
-                                if ((int) $categorias[$k]['id'] == (int) $noticias_categorias[$j]['noticias_categorias_id']) { ?>
+                                if (strcmp($categorias[$k]['id'], $noticias_categorias[$j]['noticias_categorias_id']) == 0) { ?>
                                     <p>Categoría: <?php echo($categorias[$k]['Nombre']); ?></p>
-                                    <input type="hidden" id="categorias_<?php echo($id);?>" value="<?php echo($categorias[$k]['id'] . '_' . $categorias[$i]['Nombre']); ?>">
+                                    <input type="hidden" id="categorias_<?php echo($id);?>" value="<?php echo($categorias[$k]['id'] . '_' . $categorias[$k]['Nombre']); ?>">
                                 <?php }
                             }
                         }
@@ -126,6 +144,11 @@
                         <input type="hidden" class="form-control" name="fechaNoticia" id="fechaNoticia"/>
                     </div>
                     <div class="form-group">
+                        <label>Autor/a: </label>
+                        <input type="text" class="form-control" id="autorNoticiaDisabled" disabled/>
+                        <input type="hidden" class="form-control" name="autorNoticia" id="autorNoticia"/>
+                    </div>
+                    <div class="form-group">
                         <label>Categoria: </label>
                         <select name="categoriaNoticia" id="categoriaNoticia" class="form-select form-select-lg mb-3">
                             <?php for ($i = 0; $i < sizeof($categorias); $i++) {?>
@@ -159,6 +182,7 @@
                 <p id="idNoticia"></p>
                 <p id="cuerpoNoticia"></p>
                 <p id="fechaNoticia"></p>
+                <p id="autorNoticia"></p>
                 <p id="slugNoticia"></p>
                 <p id="categoriaNoticia"> </p>
                 <div>

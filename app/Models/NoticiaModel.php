@@ -18,7 +18,8 @@ class NoticiaModel extends Model
     protected $validationRules = [
         'Titular' => 'required',
         'Fecha' => 'required',
-        'Slug' => 'required'
+        'Slug' => 'required',
+        'usuarios_id' => 'required'
     ]; 
     protected $validationMessages = [
         'Titular' => 'Es obligatorio que tenga un Titular.'
