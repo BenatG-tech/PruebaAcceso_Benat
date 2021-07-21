@@ -5,16 +5,22 @@
 <?php
 	$url_base ="/PruebaAcceso_Benat/public";
 	$route_actual = strtr(trim(substr(current_url(), 51)), "-", " "); //nombre categoria
+	$cantidad_noticias = 0;
 ?>
 
 <section>
 	<?php for ($k = 0; $k < sizeof($categorias); $k++) { 
-		if (strcmp(strtolower($categorias[$k]['Nombre']), $route_actual) == 0) {
+		$no_permitidas= array ("á","é","í","ó","ú","Á","É","Í","Ó","Ú","ñ","À","Ã","Ì","Ò","Ù","Ã™","Ã ","Ã¨","Ã¬","Ã²","Ã¹","ç","Ç","Ã¢","ê","Ã®","Ã´","Ã»","Ã‚","ÃŠ","ÃŽ","Ã”","Ã›","ü","Ã¶","Ã–","Ã¯","Ã¤","«","Ò","Ã","Ã„","Ã‹");
+		$permitidas= array ("a","e","i","o","u","A","E","I","O","U","n","N","A","E","I","O","U","a","e","i","o","u","c","C","a","e","i","o","u","A","E","I","O","U","u","o","O","i","a","e","U","I","A","E");
+		$nombre_categoria = str_replace($no_permitidas, $permitidas ,$categorias[$k]['Nombre']);
+		$nombre_categoria = strtr(strtolower(trim($nombre_categoria)), " ", "-");
+		if (strcmp($nombre_categoria, $route_actual) == 0) {
 			for ($i = 0; $i < sizeof($noticias_categorias); $i++) { 
 				for ($j = 0; $j < sizeof($noticias); $j++) { 
 					$id = $noticias[$j]['id'];
 					if (strcmp($noticias_categorias[$i]['noticias_id'], $noticias[$j]['id'])== 0) {
-						if (strcmp($noticias_categorias[$i]['noticias_categorias_id'], $categorias[$k]['id']) == 0) { ?>
+						if (strcmp($noticias_categorias[$i]['noticias_categorias_id'], $categorias[$k]['id']) == 0) { 
+							$cantidad_noticias += 1;?>
 							<div>
 								<div style="clear:both;">
 									<form action="<?php echo(base_url($url_base.'/noticias' . '/' . $noticias[$j]['Slug'])); ?>" method="POST">
@@ -35,7 +41,11 @@
 									</div>
 									<p>Fecha de publicación: <?php echo($noticias[$j]['Fecha']); ?></p>
 									<?php
-										$nombre_cat = strtr(strtolower(trim($categorias[$k]['Nombre'])), " ", "-");?>
+										$no_permitidas= array ("á","é","í","ó","ú","Á","É","Í","Ó","Ú","ñ","À","Ã","Ì","Ò","Ù","Ã™","Ã ","Ã¨","Ã¬","Ã²","Ã¹","ç","Ç","Ã¢","ê","Ã®","Ã´","Ã»","Ã‚","ÃŠ","ÃŽ","Ã”","Ã›","ü","Ã¶","Ã–","Ã¯","Ã¤","«","Ò","Ã","Ã„","Ã‹");
+										$permitidas= array ("a","e","i","o","u","A","E","I","O","U","n","N","A","E","I","O","U","a","e","i","o","u","c","C","a","e","i","o","u","A","E","I","O","U","u","o","O","i","a","e","U","I","A","E");
+										$nombre_cat = str_replace($no_permitidas, $permitidas ,$categorias[$k]['Nombre']);
+										$nombre_cat = strtr(strtolower(trim($nombre_cat)), " ", "-");
+										?>
 									<form action="<?php echo(base_url($url_base.'/noticias/categoria' . '/' . $nombre_cat)); ?>" method="POST">
 										<p>Categoría: <button type="submit" id="<?php echo($categorias[$k]['Nombre']); ?>_<?php echo($categorias[$k]['id']); ?>" class="btn btn-light btn-sm submit"><?php echo($categorias[$k]['Nombre']); ?></button></p>
 									</form>
@@ -47,6 +57,11 @@
 				}
 			}
 		}
+	} 
+	if ($cantidad_noticias == 0) {
+		echo("<div class='alert alert-danger' role='alert'>
+                No hay ninguna noticia con esa categoría asignada.
+            </div>");
 	} ?>
 </section>
 <?= $this->endSection() ?>
