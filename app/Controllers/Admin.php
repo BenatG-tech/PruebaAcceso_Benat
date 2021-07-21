@@ -46,13 +46,17 @@ class Admin extends BaseController
 	public function usuarios()
 	{
 		$usuarios = new UsuarioModel();
+		$noticias = new NoticiaModel();
 		$data['usuarios'] = $usuarios->findAll();
 
 		if (count($_POST) != 0) {
 			$usuario = new UsuarioModel();
 			if (sizeof($_POST) == 1) {
 				$keys = array_keys($_POST);
-				$usuario->delete($_POST[$keys[0]]);
+				$not = $noticias->where('usuarios_id', $_POST[$keys[0]])->findAll();
+				if ($not['0'] == Null) {
+					$usuario->delete($_POST[$keys[0]]);
+				}
 			} else {
 				$datos = [
 					'Usuario' => trim($this->request->getPost('usuarioUsuario')),
@@ -75,6 +79,8 @@ class Admin extends BaseController
 		$noticias = new NoticiaModel();
 		$categorias = new CategoriaModel();
 		$noticias_categorias = new NoticiaCategoriaModel();
+		$usuarios = new UsuarioModel();
+		$data['usuarios'] = $usuarios->findAll();
 		$data['noticias'] = $noticias->findAll();
 		$data['categorias'] = $categorias->findAll();
 		$data['noticias_categorias'] = $noticias_categorias->findAll();
@@ -84,6 +90,7 @@ class Admin extends BaseController
 			date_default_timezone_set("Europe/Madrid");
 			if (sizeof($_POST) == 1) {
 				$keys = array_keys($_POST);
+				$noticias_categorias->delete($_POST[$keys[0]]);
 				$noticia->delete($_POST[$keys[0]]);
 			} else if ($this->request->getPost('idNoticia') != Null) {
 				$datos = [
@@ -103,7 +110,8 @@ class Admin extends BaseController
 					'Titular' => trim($this->request->getPost('titularNoticia')),
 					'Cuerpo' => trim($this->request->getPost('cuerpoNoticia')),
 					'Slug' => strtr(strtolower(trim($this->request->getPost('titularNoticia'))), " ", "-"),
-					'Fecha' => date("Y-m-d")
+					'Fecha' => date("Y-m-d"),
+					'usuarios_id' =>  trim(session('usuario'))
 				];
 				$noticia->insert($datos);
 
