@@ -4,7 +4,7 @@
 <?= $this->section('content') ?>
 
 <?php
-	$route_actual = substr(current_url(), 41); //slug
+	$route_actual = substr(current_url(), 67); //slug
 ?>
 
 <section>

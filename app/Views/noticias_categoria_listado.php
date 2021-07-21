@@ -3,7 +3,7 @@
 
 <?= $this->section('content') ?>
 <?php
-	$route_actual = strtr(trim(substr(current_url(), 51)), "-", " "); //nombre categoria
+	$route_actual = strtr(trim(substr(current_url(), 77)), "-", " "); //nombre categoria
 	$cantidad_noticias = 0;
 ?>
 
