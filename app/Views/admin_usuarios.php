@@ -7,10 +7,10 @@
 	$(document).ready(function(){
 		$('.verModalUsuario').on('click',function() {
             $id = $(this).attr('id').substring(4, $(this).attr('id').length);
-            $('h1#usuarioUsuario').text(document.getElementById('nombre_'+$id).value);
+            $('h1#usuarioUsuario').text('Usuario: ' + document.getElementById('nombre_'+$id).value);
             $('p#idUsuario').text('ID: ' + $id);
-            $('p#emailUsuario').text(document.getElementById('email_'+$id).value);
-            $('p#contrasenaUsuario').text(document.getElementById('contrasena_'+$id).value);
+            $('p#emailUsuario').text('Email: ' + document.getElementById('email_'+$id).value);
+            $('p#contrasenaUsuario').text('Contraseña: ' + document.getElementById('contrasena_'+$id).value);
 			$('#modalUsuarioVer').modal('show');
 		});
 		$('.editarModalUsuario').on('click',function(){
@@ -36,12 +36,8 @@
 	});
 </script>
 
-<?php
-	$url_base ="/PruebaAcceso_Benat/public";
-?>
-
 <section>
-	<button type="button" class="btn btn-success btn-sm float-left crearUsuario"><i class="fas fa-plus-circle"></i> Nuevo/a Usuario/a</button>
+	<button type="button" class="btn btn-success btn-sm crearUsuario" style="width:100%;"><i class="fas fa-plus-circle"></i> Nuevo/a Usuario/a</button>
 	<?php if (is_array($usuarios) && sizeof($usuarios) > 0) {	
         for ($i = 0; $i < sizeof($usuarios); $i++) { 
             $id = $usuarios[$i]['id'];?>
@@ -49,7 +45,7 @@
 				<div style="clear:both;">
 					<h1 style="float: left; width:80%; margin-bottom:15px;"><?php echo($usuarios[$i]['Usuario']); ?></h1>
 					<input type="hidden" id="nombre_<?php echo($id);?>" value="<?php echo($usuarios[$i]['Usuario']); ?>">
-					<form action="<?php echo(base_url($url_base.'/admin/usuarios')); ?>" method="POST">
+					<form action="<?php echo(base_url('/admin/usuarios')); ?>" method="POST">
 						<input type="hidden" name="id_<?php echo($id);?>" id="id_<?php echo($id);?>" value="<?php echo($usuarios[$i]['id']); ?>">
 						<div class="d-grid gap-2 d-md-flex justify-content-md-end" style="float: right;width:20%;margin:17px 0px;">
 							<button type="button" id="ver_<?php echo($id);?>" class="btn btn-primary btn-sm verModalUsuario" data-toggle="modal" data-target="#modalUsuarioVer"><i class="fas fa-eye"></i></button>
@@ -79,7 +75,7 @@
 				<h4 class="modal-title">Editar Usuario/a</h4>
 			</div>
 			<div class="modal-body">
-				<form action="<?php echo(base_url($url_base.'/admin/usuarios')); ?>" method="POST">
+				<form action="<?php echo(base_url('/admin/usuarios')); ?>" method="POST">
 					<div class="form-group">
 						<label>Usuario: </label>
 						<input type="text" class="form-control" name="usuarioUsuario" id="usuarioUsuario"/>

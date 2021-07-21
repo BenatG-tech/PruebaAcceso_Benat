@@ -7,7 +7,7 @@
 	$(document).ready(function(){
         $('.verModalCategoria').on('click',function() {
             $id = $(this).attr('id').substring(4, $(this).attr('id').length);
-            $('h1#nombreCategoria').text(document.getElementById('nombre_'+$id).value);
+            $('h1#nombreCategoria').text('Nombre: ' + document.getElementById('nombre_'+$id).value);
             $('p#idCategoria').text('ID: ' + $id);
 			$('#modalCategoriaVer').modal('show');
 		});
@@ -30,12 +30,8 @@
 	});
 </script>
 
-<?php
-	$url_base ="/PruebaAcceso_Benat/public";
-?>
-
 <section>
-    <button type="button" class="btn btn-success btn-sm float-left crearCategoria"><i class="fas fa-plus-circle"></i> Nueva Categoría</button>
+    <button type="button" class="btn btn-success btn-sm crearCategoria" style="width:100%;"><i class="fas fa-plus-circle"></i> Nueva Categoría</button>
     <?php if (is_array($categorias) && sizeof($categorias) > 0) {
         for ($i = 0; $i < sizeof($categorias); $i++) { 
             $id = $categorias[$i]['id'];?>
@@ -43,7 +39,7 @@
                 <div style="clear:both;">
                     <h1 style="float: left; width:80%; margin-bottom:15px;"><?php echo($categorias[$i]['Nombre']); ?></h1>
                     <input type="hidden" id="nombre_<?php echo($id);?>" value="<?php echo($categorias[$i]['Nombre']); ?>">
-                    <form action="<?php echo(base_url($url_base.'/admin/categorias')); ?>" method="POST">
+                    <form action="<?php echo(base_url('/admin/categorias')); ?>" method="POST">
                         <input type="hidden" name="id_<?php echo($id);?>" id="id_<?php echo($id);?>" value="<?php echo($categorias[$i]['id']); ?>">
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end" style="float: right;width:20%;margin:17px 0px;">
                             <button type="button" id="ver_<?php echo($id);?>" class="btn btn-primary btn-sm verModalCategoria" data-toggle="modal" data-target="#modalCategoriaVer"><i class="fas fa-eye"></i></button>
@@ -70,7 +66,7 @@
                 <h4 class="modal-title">Editar categoría</h4>
             </div>
             <div class="modal-body">
-                <form action="<?php echo(base_url($url_base.'/admin/categorias')); ?>" method="POST">
+                <form action="<?php echo(base_url('/admin/categorias')); ?>" method="POST">
                     <div class="form-group">
                         <label >Nombre: </label>
                         <input type="text" class="form-control" name="nombreCategoria" id="nombreCategoria"/>

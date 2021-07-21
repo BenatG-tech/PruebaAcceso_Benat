@@ -213,10 +213,15 @@
 			<div class="collapse navbar-collapse" id="navbarNav">
 				<ul class="navbar-nav">
 					<li class="nav-item">
-						<a class="nav-link active" aria-current="page" href="<?= base_url($url_base.'/') ?>">Inicio</a>
+						<a class="nav-link" aria-current="page" href="./">Inicio</a>
 					</li>
 					<li class="nav-item abrirModalLogIn">
-						<a class="nav-link" href="<?= base_url($url_base.'/admin') ?>">Acceso</a>
+						<a class="nav-link 
+							<?php if(strlen(session('usuario')) == 0) { ?>
+								iniciarLoginModal" href="#"
+							<?php } else { ?>
+								" href="./admin"
+							<?php } ?> >Acceso</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="<?= base_url($url_base.'/noticias') ?>">Noticias</a>
@@ -231,7 +236,6 @@
 </header>
 
 <!-- CONTENT -->
-
 <?= $this->renderSection('content') ?>
 
 <footer>
@@ -250,9 +254,39 @@
 			menuItem.classList.toggle("hidden");
 		}
 	}
+	$('.iniciarLoginModal').on('click',function() {
+		$('#loginModal').modal('show');
+
+	});
 </script>
 
-<!-- -->
+<!-- MODAL -->
+<div class="modal fade" id="loginModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+				<h1>Inicio de sesión</h1>
+            </div>
+            <div class="modal-body">
+				<form action="<?php echo(base_url('/admin/login')); ?>" method="POST" class="p-4">
+					<div class="form-group">
+						<label>Email: </label>
+						<input type="email" class="form-control" name="email" id="email"/>
+					</div>
+					<div class="form-group">
+						<label>Contraseña: </label>
+						<input type="password" class="form-control" name="contrasena" id="contrasena"/>
+					</div>
+					<br/>
+					<div>
+						<button type="submit" class="btn btn-primary submit"><i class="fas fa-sign-in-alt"></i> Iniciar sesión</button>
+					</div>
+				</form>
+			</div>
+            <div class="modal-footer"></div>
+        </div>
+    </div>
+</div>
 
 </body>
 </html>

@@ -12,7 +12,7 @@
             $('p#fechaNoticia').text('Fecha de publicación: ' + document.getElementById('fecha_'+$id).value);
             $('p#cuerpoNoticia').text(document.getElementById('cuerpo_'+$id).value);
             $('p#slugNoticia').text('Slug: ' + document.getElementById('slug_'+$id).value);
-            $('p#categoriaNoticia').text((document.getElementById('categorias_'+$id).value).split('_')[1]);
+            $('p#categoriaNoticia').text('Categoría: ' + (document.getElementById('categorias_'+$id).value).split('_')[1]);
 			$('#modalNoticiaVer').modal('show');
 		});
         $('.editarModalNoticia').on('click',function() {
@@ -43,12 +43,8 @@
 	});
 </script>
 
-<?php
-	$url_base ="/PruebaAcceso_Benat/public";
-?>
-
 <section>
-    <button type="button" class="btn btn-success btn-sm float-left crearNoticia"><i class="fas fa-plus-circle"></i> Nueva noticia</button>
+    <button type="button" class="btn btn-success btn-sm crearNoticia" style="width:100%;"><i class="fas fa-plus-circle"></i> Nueva noticia</button>
     <?php if (is_array($noticias) && sizeof($noticias) > 0) {
         for ($i = 0; $i < sizeof($noticias); $i++) { 
             $id = $noticias[$i]['id'];?>
@@ -56,7 +52,7 @@
                 <div style="clear:both;">
                     <h1 style="float: left; width:80%; margin-bottom:15px;"><?php echo($noticias[$i]['Titular']); ?></h1>
                     <input type="hidden" id="titular_<?php echo($id);?>" value="<?php echo($noticias[$i]['Titular']); ?>">
-                    <form action="<?php echo(base_url($url_base.'/admin/noticias')); ?>" method="POST">
+                    <form action="<?php echo(base_url('/admin/noticias')); ?>" method="POST">
                         <input type="hidden" name="id_<?php echo($id);?>" id="id_<?php echo($id);?>" value="<?php echo($id); ?>">
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end" style="float: right;width:20%;margin:17px 0px;">
                             <button type="button" id="ver_<?php echo($id);?>" class="btn btn-primary btn-sm verModalNoticia" data-toggle="modal" data-target="#modalNoticiaVer"><i class="fas fa-eye"></i></button>
@@ -109,7 +105,7 @@
                 <h4 class="modal-title">Editar noticia</h4>
             </div>
             <div class="modal-body">
-                <form action="<?php echo(base_url($url_base.'/admin/noticias')); ?>" method="POST">
+                <form action="<?php echo(base_url('/admin/noticias')); ?>" method="POST">
                     <div class="form-group">
                         <label>Titular: </label>
                         <input type="text" class="form-control" name="titularNoticia" id="titularNoticia"/>
