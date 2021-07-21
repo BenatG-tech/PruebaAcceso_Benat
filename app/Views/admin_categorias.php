@@ -7,7 +7,7 @@
 	$(document).ready(function(){
         $('.verModalCategoria').on('click',function() {
             $id = $(this).attr('id').substring(4, $(this).attr('id').length);
-            $('h1#nombreCategoria').text(document.getElementById('nombre_'+$id).value);
+            $('h1#nombreCategoria').text('Nombre: ' + document.getElementById('nombre_'+$id).value);
             $('p#idCategoria').text('ID: ' + $id);
 			$('#modalCategoriaVer').modal('show');
 		});
@@ -35,7 +35,7 @@
 ?>
 
 <section>
-    <button type="button" class="btn btn-success btn-sm float-left crearCategoria"><i class="fas fa-plus-circle"></i> Nueva Categoría</button>
+    <button type="button" class="btn btn-success btn-sm crearCategoria" style="width:100%;"><i class="fas fa-plus-circle"></i> Nueva Categoría</button>
     <?php if (is_array($categorias) && sizeof($categorias) > 0) {
         for ($i = 0; $i < sizeof($categorias); $i++) { 
             $id = $categorias[$i]['id'];?>

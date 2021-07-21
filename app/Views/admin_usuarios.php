@@ -7,10 +7,10 @@
 	$(document).ready(function(){
 		$('.verModalUsuario').on('click',function() {
             $id = $(this).attr('id').substring(4, $(this).attr('id').length);
-            $('h1#usuarioUsuario').text(document.getElementById('nombre_'+$id).value);
+            $('h1#usuarioUsuario').text('Usuario: ' + document.getElementById('nombre_'+$id).value);
             $('p#idUsuario').text('ID: ' + $id);
-            $('p#emailUsuario').text(document.getElementById('email_'+$id).value);
-            $('p#contrasenaUsuario').text(document.getElementById('contrasena_'+$id).value);
+            $('p#emailUsuario').text('Email: ' + document.getElementById('email_'+$id).value);
+            $('p#contrasenaUsuario').text('Contraseña: ' + document.getElementById('contrasena_'+$id).value);
 			$('#modalUsuarioVer').modal('show');
 		});
 		$('.editarModalUsuario').on('click',function(){
@@ -41,7 +41,7 @@
 ?>
 
 <section>
-	<button type="button" class="btn btn-success btn-sm float-left crearUsuario"><i class="fas fa-plus-circle"></i> Nuevo/a Usuario/a</button>
+	<button type="button" class="btn btn-success btn-sm crearUsuario" style="width:100%;"><i class="fas fa-plus-circle"></i> Nuevo/a Usuario/a</button>
 	<?php if (is_array($usuarios) && sizeof($usuarios) > 0) {	
         for ($i = 0; $i < sizeof($usuarios); $i++) { 
             $id = $usuarios[$i]['id'];?>

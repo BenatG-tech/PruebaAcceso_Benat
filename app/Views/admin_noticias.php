@@ -12,7 +12,7 @@
             $('p#fechaNoticia').text('Fecha de publicación: ' + document.getElementById('fecha_'+$id).value);
             $('p#cuerpoNoticia').text(document.getElementById('cuerpo_'+$id).value);
             $('p#slugNoticia').text('Slug: ' + document.getElementById('slug_'+$id).value);
-            $('p#categoriaNoticia').text((document.getElementById('categorias_'+$id).value).split('_')[1]);
+            $('p#categoriaNoticia').text('Categoría: ' + (document.getElementById('categorias_'+$id).value).split('_')[1]);
 			$('#modalNoticiaVer').modal('show');
 		});
         $('.editarModalNoticia').on('click',function() {
@@ -48,7 +48,7 @@
 ?>
 
 <section>
-    <button type="button" class="btn btn-success btn-sm float-left crearNoticia"><i class="fas fa-plus-circle"></i> Nueva noticia</button>
+    <button type="button" class="btn btn-success btn-sm crearNoticia" style="width:100%;"><i class="fas fa-plus-circle"></i> Nueva noticia</button>
     <?php if (is_array($noticias) && sizeof($noticias) > 0) {
         for ($i = 0; $i < sizeof($noticias); $i++) { 
             $id = $noticias[$i]['id'];?>
