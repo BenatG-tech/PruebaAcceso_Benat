@@ -10,7 +10,37 @@ class Admin extends BaseController
 {
 	public function index()
 	{
-		return view('admin');
+		return view('admin_usuarios');
+	}
+
+	public function login()
+	{
+		$usuarios = new UsuarioModel();
+		$email = $this->request->getPost('email');
+		$contrasena = $this->request->getPost('contrasena');
+
+		$datos_usuario = $usuarios->whereIn('Email', $email)->first();
+		if (count($datos_usuario) > 0 && strcmp($contrasena, $datos_usuario['Contrasena']) == 0) {
+				$data_session = [
+					"usuario" => $datos_usuario['id'],
+					"contrasena" => $datos_usuario['Contrasena']
+				];
+				$session = session();
+				$session->set($data_session);
+				return redirect()->to(base_url('/admin/usuarios'));
+			
+		} else {
+			return redirect()->to(base_url('/'));
+		}
+		return redirect()->to(base_url('/admin/usuarios'));
+	}
+
+	public function logout()
+	{
+		$session = session();
+		$session->destroy();
+
+		return redirect()->to(base_url('/'));
 	}
 
 	public function usuarios()
