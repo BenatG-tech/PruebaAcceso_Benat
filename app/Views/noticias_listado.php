@@ -31,6 +31,14 @@
 							</p>
 						</div>
 						<p>Fecha de publicación: <?php echo($noticias[$i]['Fecha']); ?></p>
+
+						<?php if (sizeof($usuarios) > 0) {
+							for ($j = 0; $j < sizeof($usuarios); $j++) { 
+								if (strcmp($usuarios[$j]['id'], $noticias[$i]['usuarios_id']) == 0) { ?>
+									<p>Autor/a: <?php echo($usuarios[$j]['Usuario']); ?></p>
+								<?php }
+							}
+						} ?>
 						<?php if (sizeof($categorias) > 0 && sizeof($noticias_categorias) > 0) {
 							for ($j = 0; $j < sizeof($noticias_categorias); $j++) { 
 								if ((int) $noticias_categorias[$j]['noticias_id'] == (int) $id) {
