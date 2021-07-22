@@ -17,16 +17,8 @@
 			for ($i = 0; $i < sizeof($noticias_categorias); $i++) { 
 				$empezar = sizeof($noticias) - 1;
 				$terminar = 0;
-				/**if (sizeof($noticias) >= 6) {
-					$empezar = sizeof($noticias) - 1;
-					$terminar = sizeof($noticias) - 6;
-				}*/
-				//var_dump($empezar);
-				//var_dump($terminar);
-				//for ($j = 0; $j < sizeof($noticias); $j++) { 
 				for ($j = $empezar; $j >= $terminar; $j--) {
 					$id = $noticias[$j]['id'];
-					var_dump($id);
 					if (strcmp($noticias_categorias[$i]['noticias_id'], $id)== 0) {
 						if (strcmp($noticias_categorias[$i]['noticias_categorias_id'], $categorias[$k]['id']) == 0) { 
 							$cantidad_noticias += 1;?>
