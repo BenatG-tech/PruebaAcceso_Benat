@@ -15,9 +15,19 @@
 		$nombre_categoria = strtr(strtolower(trim($nombre_categoria)), " ", "-");
 		if (strcmp($nombre_categoria, $route_actual) == 0) {
 			for ($i = 0; $i < sizeof($noticias_categorias); $i++) { 
-				for ($j = 0; $j < sizeof($noticias); $j++) { 
+				$empezar = sizeof($noticias) - 1;
+				$terminar = 0;
+				/**if (sizeof($noticias) >= 6) {
+					$empezar = sizeof($noticias) - 1;
+					$terminar = sizeof($noticias) - 6;
+				}*/
+				//var_dump($empezar);
+				//var_dump($terminar);
+				//for ($j = 0; $j < sizeof($noticias); $j++) { 
+				for ($j = $empezar; $j >= $terminar; $j--) {
 					$id = $noticias[$j]['id'];
-					if (strcmp($noticias_categorias[$i]['noticias_id'], $noticias[$j]['id'])== 0) {
+					var_dump($id);
+					if (strcmp($noticias_categorias[$i]['noticias_id'], $id)== 0) {
 						if (strcmp($noticias_categorias[$i]['noticias_categorias_id'], $categorias[$k]['id']) == 0) { 
 							$cantidad_noticias += 1;?>
 							<div>

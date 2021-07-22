@@ -59,7 +59,7 @@
                     <input type="hidden" id="titular_<?php echo($id);?>" value="<?php echo($noticias[$i]['Titular']); ?>">
                     <form action="<?php echo(base_url('/admin/noticias')); ?>" method="POST">
                         <input type="hidden" name="id_<?php echo($id);?>" id="id_<?php echo($id);?>" value="<?php echo($id); ?>">
-                        <div class="d-grid gap-2 d-md-flex justify-content-md-end" style="float: right;width:20%;margin:17px 0px;">
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end" style="float: right;width:20%;margin:20px 0px;">
                             <button type="button" id="ver_<?php echo($id);?>" class="btn btn-primary btn-sm verModalNoticia" data-toggle="modal" data-target="#modalNoticiaVer"><i class="fas fa-eye"></i></button>
                             <button type="button" id="editar_<?php echo($id);?>" class="btn btn-primary btn-sm editarModalNoticia" data-toggle="modal" data-target="#modalNoticiaEditar"><i class="fas fa-edit"></i></button>
                             <button type="submit" id="borrar_<?php echo($id);?>" class="btn btn-danger btn-sm submit"><i class="fas fa-trash-alt"></i></button>

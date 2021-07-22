@@ -10,7 +10,7 @@ class Admin extends BaseController
 {
 	public function index()
 	{
-		return view('admin_usuarios');
+		return redirect()->to(base_url('/admin/usuarios'));
 	}
 
 	public function login()
@@ -18,12 +18,11 @@ class Admin extends BaseController
 		$usuarios = new UsuarioModel();
 		$email = $this->request->getPost('email');
 		$contrasena = $this->request->getPost('contrasena');
-
-		$datos_usuario = $usuarios->whereIn('Email', $email)->first();
-		if (count($datos_usuario) > 0 && strcmp($contrasena, $datos_usuario['Contrasena']) == 0) {
+		$datos_usuario = $usuarios->where('Email', $email)->findAll();
+		if (count($datos_usuario) > 0 && strcmp($contrasena, $datos_usuario[0]['Contrasena']) == 0) {
 				$data_session = [
-					"usuario" => $datos_usuario['id'],
-					"contrasena" => $datos_usuario['Contrasena']
+					"usuario" => $datos_usuario[0]['id'],
+					"contrasena" => $datos_usuario[0]['Contrasena']
 				];
 				$session = session();
 				$session->set($data_session);
@@ -52,8 +51,10 @@ class Admin extends BaseController
 		if (count($_POST) != 0) {
 			$usuario = new UsuarioModel();
 			if (sizeof($_POST) == 1) {
+				//Comprobar que el/la usuario/a no tiene noticias publicadas
 				$keys = array_keys($_POST);
-				$not = $noticias->where('usuarios_id', $_POST[$keys[0]])->findAll();
+				$id_usuario = substr($keys[0], 3);
+				$not = $noticias->where('usuarios_id', $id_usuario)->findAll();
 				if ($not['0'] == Null) {
 					$usuario->delete($_POST[$keys[0]]);
 				}
@@ -89,6 +90,7 @@ class Admin extends BaseController
 			$noticia = new NoticiaModel();
 			date_default_timezone_set("Europe/Madrid");
 			if (sizeof($_POST) == 1) {
+				//Borrar la relación de noticia_id y categoria_id
 				$keys = array_keys($_POST);
 				$noticias_categorias->delete($_POST[$keys[0]]);
 				$noticia->delete($_POST[$keys[0]]);
@@ -115,6 +117,7 @@ class Admin extends BaseController
 				];
 				$noticia->insert($datos);
 
+				//Crear relación noticia_id y categoria_id
 				$noticia_categoria = new NoticiaCategoriaModel();
 				$ntcs = $noticias->findAll();
 				for ($i = 0; $i < sizeof($ntcs); $i++) {
@@ -138,12 +141,19 @@ class Admin extends BaseController
 	public function categorias()
 	{
 		$categorias = new CategoriaModel();
+		$noticias_categorias = new NoticiaCategoriaModel();
 		$data['categorias'] = $categorias->findAll();
 		if (count($_POST) != 0) {
 			$categoria = new CategoriaModel();
-			if (strpos(array_keys($_POST)[0], 'id_') == 0) {
+			$keys = array_keys($_POST);
+			if (sizeof($_POST) == 1) {
+				//Comprobar que no haya noticias publicadas con esa categoría
 				$keys = array_keys($_POST);
-				$categoria->delete($_POST[$keys[0]]);
+				$id_categoria = substr($keys[0], 3);
+				$not_cat = $noticias_categorias->where('noticias_categorias_id', $id_categoria)->first();
+				if ($not_cat == Null) {
+					$categoria->delete($id_categoria);
+				}
 			} else {
 				$datos = [
 					'Nombre' => trim($this->request->getPost('nombreCategoria')),

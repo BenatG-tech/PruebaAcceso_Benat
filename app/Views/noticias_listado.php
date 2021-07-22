@@ -5,13 +5,13 @@
 
 <section>
 	<?php if (is_array($noticias) && sizeof($noticias) > 0) {
-		$empezar = 0;
-		$terminar = 5;
-		if (sizeof($noticias) > 6) {
+		$empezar = sizeof($noticias) - 1;
+		$terminar = 0;
+		if (sizeof($noticias) >= 6) {
 			$empezar = sizeof($noticias) - 1;
 			$terminar = sizeof($noticias) - 6;
 		}
-		for ($i = $empezar; $i > $terminar; $i--) { 
+		for ($i = $empezar; $i >= $terminar; $i--) { 
 			$id = $noticias[$i]['id']; ?>
 				<div>
 					<div style="clear:both;">

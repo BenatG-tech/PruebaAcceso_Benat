@@ -24,7 +24,7 @@ $currentTime = time();
 
 <section>
 	<div class="report-container bg-light p-3">
-        <h2>Tiempo en <?php echo $data->name; ?></h2>
+        <h1>Tiempo en <?php echo $data->name; ?></h1>
         <div class="time">
             <div><?php echo date("l g:i a", $currentTime); ?></div>
             <div><?php echo date("j F, Y",$currentTime); ?></div>
@@ -34,8 +34,8 @@ $currentTime = time();
             </div>
         </div>
         <div class="weather-forecast">
-            <span class="max-temperature"> Temperatura máxima: <?php echo $data->main->temp_max; ?>°C</span>
-            <span class="min-temperature"> Temperatura mínima: <?php echo $data->main->temp_min; ?>°C</span>
+            <span class="max-temperature"> T. máxima: <?php echo $data->main->temp_max; ?>°C</span>
+            <span class="min-temperature"> T. mínima: <?php echo $data->main->temp_min; ?>°C</span>
         </div>
         <div class="time">
             <div>Humedad: <?php echo $data->main->humidity; ?> %</div>

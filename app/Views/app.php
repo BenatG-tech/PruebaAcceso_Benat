@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 	<meta charset="UTF-8">
-	<title>Welcome to CodeIgniter 4!</title>
+	<title>Prueba Acceso PHP - Beñat</title>
 	<meta name="description" content="The small framework with powerful features">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -261,7 +261,7 @@
 				<h1>Inicio de sesión</h1>
             </div>
             <div class="modal-body">
-				<form action="<?php echo(base_url('/admin/login')); ?>" method="POST" class="p-4">
+				<form action="<?php echo(base_url('/admin/login')); ?>" method="POST" class="p-4"> <!-- /admin/login -->
 					<div class="form-group">
 						<label>Email: </label>
 						<input type="email" class="form-control" name="email" id="email"/>

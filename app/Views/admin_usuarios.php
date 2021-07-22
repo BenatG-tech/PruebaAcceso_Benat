@@ -47,7 +47,7 @@
 					<input type="hidden" id="nombre_<?php echo($id);?>" value="<?php echo($usuarios[$i]['Usuario']); ?>">
 					<form action="<?php echo(base_url('/admin/usuarios')); ?>" method="POST">
 						<input type="hidden" name="id_<?php echo($id);?>" id="id_<?php echo($id);?>" value="<?php echo($usuarios[$i]['id']); ?>">
-						<div class="d-grid gap-2 d-md-flex justify-content-md-end" style="float: right;width:20%;margin:17px 0px;">
+						<div class="d-grid gap-2 d-md-flex justify-content-md-end" style="float: right;width:20%;margin:20px 0px;">
 							<button type="button" id="ver_<?php echo($id);?>" class="btn btn-primary btn-sm verModalUsuario" data-toggle="modal" data-target="#modalUsuarioVer"><i class="fas fa-eye"></i></button>
 							<button type="button" id="editar_<?php echo($id);?>" class="btn btn-primary btn-sm editarModalUsuario" data-toggle="modal" data-target="#modalUsuarioEditar"><i class="fas fa-edit"></i></button>
 							<button type="submit" id="borrar_<?php echo($id);?>" class="btn btn-danger btn-sm submit"><i class="fas fa-trash-alt"></i></button>
